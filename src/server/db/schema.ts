@@ -1,13 +1,11 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql } from "drizzle-orm";
 import {
   bigint,
-  index,
+  datetime,
   mysqlTableCreator,
-  timestamp,
-  varchar,
+  text,
 } from "drizzle-orm/mysql-core";
 
 /**
@@ -16,19 +14,32 @@ import {
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = mysqlTableCreator((name) => `vittflow_${name}`);
+export const createTable = mysqlTableCreator((name) => name);
 
-export const posts = createTable(
-  "post",
-  {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
-    name: varchar("name", { length: 256 }),
-    createdAt: timestamp("created_at")
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
-  },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
-  })
-);
+export const transactions = createTable("transactions", {
+  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  sender: text("sender"),
+  reciever: text("reciever"),
+  amount: text("amount"),
+  datetime: datetime("datetime"),
+  projectId: bigint("projectId", { mode: "number" }).references(
+    () => project.id,
+  ),
+});
+export const project = createTable("project", {
+  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  name: text("name"),
+  description: text("description"),
+  outflow: text("outflow"),
+  inflow: text("inflow"),
+  balance: text("balance"),
+  organisationId: bigint("organisationId", { mode: "number" }).references(
+    () => organisation.id,
+  ),
+});
+
+export const organisation = createTable("organisation", {
+  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  name: text("name"),
+  datetime: datetime("datetime"),
+});
