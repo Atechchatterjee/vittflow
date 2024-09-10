@@ -6,6 +6,8 @@ import {
   datetime,
   mysqlTableCreator,
   text,
+  timestamp,
+  mysqlEnum,
 } from "drizzle-orm/mysql-core";
 
 /**
@@ -20,18 +22,21 @@ export const transactions = createTable("transactions", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
   sender: text("sender"),
   reciever: text("reciever"),
-  amount: text("amount"),
-  datetime: datetime("datetime"),
+  description: text("description"),
+  amount: text("amount").notNull(),
+  type: mysqlEnum("type", ["inflow", "outflow"]),
+  createdAt: timestamp("createdAt").defaultNow(),
   projectId: bigint("projectId", { mode: "number" }).references(
     () => project.id,
   ),
 });
+
 export const project = createTable("project", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
   name: text("name"),
   description: text("description"),
-  outflow: text("outflow"),
-  inflow: text("inflow"),
+  outflow: text("outflow").notNull(),
+  inflow: text("inflow").notNull(),
   balance: text("balance"),
   organisationId: bigint("organisationId", { mode: "number" }).references(
     () => organisation.id,

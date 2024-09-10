@@ -20,8 +20,10 @@ CREATE TABLE `transactions` (
 	`id` bigint AUTO_INCREMENT NOT NULL,
 	`sender` text,
 	`reciever` text,
+	`description` text,
 	`amount` text,
-	`datetime` datetime,
+	`type` enum('inflow','outflow'),
+	`createdAt` timestamp DEFAULT now(),
 	`projectId` bigint,
 	CONSTRAINT `transactions_id` PRIMARY KEY(`id`)
 );
