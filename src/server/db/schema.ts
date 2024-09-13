@@ -3,7 +3,6 @@
 
 import {
   bigint,
-  datetime,
   mysqlTableCreator,
   text,
   timestamp,
@@ -41,10 +40,11 @@ export const project = createTable("project", {
   organisationId: bigint("organisationId", { mode: "number" }).references(
     () => organisation.id,
   ),
+  createdAt: timestamp("createdAt").defaultNow(),
 });
 
 export const organisation = createTable("organisation", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
   name: text("name"),
-  datetime: datetime("datetime"),
+  createdAt: timestamp("createdAt").defaultNow(),
 });

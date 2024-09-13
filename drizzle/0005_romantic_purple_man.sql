@@ -1,0 +1,1 @@
+ALTER TABLE `project` ADD `createdAt` timestamp DEFAULT now();

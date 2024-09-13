@@ -15,6 +15,20 @@
       "when": 1725974591698,
       "tag": "0003_previous_kabuki",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1726113868104,
+      "tag": "0004_talented_thor",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1726114290952,
+      "tag": "0005_romantic_purple_man",
+      "breakpoints": true
     }
   ]
 }
